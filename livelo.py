@@ -23,7 +23,7 @@ time.sleep(10)   #GIVE TIME TO LOAD
 element = driver.find_element_by_xpath("//div[@id='div-cardsParity']")
 html_content = element.get_attribute('outerHTML')   #GET HTML
 soup = BeautifulSoup(html_content,'html.parser')   #PARSES IT
-table = soup.find_all('div', class_='parity__card')   #Wprlomg pm 07/02/2023
+table = soup.find_all('div', class_='parity__card')   #Working  07/02/2023
 
 names = []
 valores = []
@@ -31,21 +31,20 @@ for k in range(len(table)):
     names.append(table[k].select('div>div>div>img[alt]')[0]['alt'])
     valor = table[k].select('div>div>div>span')
     aaa = []
-    for span in valor:
+    for span in valor: #There is a composition of elements in the HTML to create the value. therefore, it needs to be joined.
         (aaa.append(span.get_text()))
     x = " ".join(aaa)
     valores.append(x)
 
+#Creating the table containing all the stores and their points
 tabela = PrettyTable()
 tabela.field_names = ["Loja", "Pontos"]
-
 for i in range(len(names)):
     tabela.add_row([names[i],valores[i]])
 
 print(tabela)
 
 
-# Threshold value
 threshold = 7
 
 # Create a regular expression pattern to match numbers in the strings
